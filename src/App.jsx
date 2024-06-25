@@ -1,39 +1,27 @@
 
-import { Canvas, useFrame } from '@react-three/fiber'
-import { useState } from 'react';
+import { Canvas } from '@react-three/fiber'
 import styled from 'styled-components';
 const Div = styled.div`
     width: 100vw;
     height: 100vh;
 `;
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
+import { Casa } from './Casa/Casa';
+import { OrbitControls } from '@react-three/drei';
+import { Stars } from './Stars/Stars';
 
-function MyAnimatedBox() {
-  const [rotation, setRotation] = useState({ x: 0, y: 0, z: 5 });
-  useFrame(({ clock }) => {
-    setRotation({ x: rotation.x + .01, y: rotation.y + .01, z: rotation.z - 0.01 })
-    const a = clock.getElapsedTime()
-    console.log(a)
-  })
+export default function App() {
   return (
-    <mesh rotation={[rotation.x , rotation.y, rotation.z]} position={[Math.cos(rotation.x * 2) * 2, Math.sin(rotation.y * 3) * 2, 0]}>
-      <boxGeometry />
-      <meshStandardMaterial color={'purple'} />
-    </mesh>
+    <Div>
+      <Canvas camera={{ position: [0, 30, -60] }}>
+        <ambientLight intensity={1} />
+        <directionalLight position={[10, 30, 10]} castShadow={true} />
+        <OrbitControls />
+
+        <Casa />
+        <Stars />
+      </Canvas>
+    </Div>
+
   )
 }
-function App() {
-
-  return (
-    <>
-      <Div>
-        <Canvas shadows={true}>
-          <ambientLight intensity={.5} />
-          <directionalLight color="red" position={[0, 5, 5]} />
-          <MyAnimatedBox />
-        </Canvas>
-      </Div>
-    </>
-  )
-}
-
-export default App
