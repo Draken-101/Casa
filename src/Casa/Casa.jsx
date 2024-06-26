@@ -11,53 +11,65 @@ import { CuboidCollider, MeshCollider, RigidBody } from '@react-three/rapier'
 export function Casa(props) {
   const { nodes, materials } = useGLTF('/Casa-transformed.glb')
   return (
-
     <group {...props} dispose={null}>
       <group position={[0, 0, -46]} scale={[52.075, 1.605, 66.682]}>
-      
-      <MeshCollider type='trimesh'>
 
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plano_1.geometry} material={materials.Material} />
-      </MeshCollider>
+        <RigidBody type='fixed'   >
+          <MeshCollider type='trimesh'>
+
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Plano_1.geometry} material={materials.Material} />
+          </MeshCollider>
+
+        </RigidBody>
         <mesh geometry={nodes.Plano_2.geometry} material={materials.Vidrio} />
       </group>
-      <MeshCollider type='trimesh'>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cubo001.geometry}
-          material={materials['Material.003']}
-          position={[-14.5, 4.5, 18.5]}
-          scale={[0.2, 4.5, 23.159]} />
-      </MeshCollider>
+
+      <RigidBody type='fixed'>
+
+        <MeshCollider type='trimesh'>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cubo001.geometry}
+            material={materials['Material.003']}
+            position={[-14.5, 4.5, 18.5]}
+            scale={[0.2, 4.5, 23.159]} />
+        </MeshCollider>
+      </RigidBody>
 
 
-      <MeshCollider type='trimesh'>
+      <RigidBody type='fixed'>
+        <MeshCollider type='trimesh'>
 
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cubo002.geometry}
-          material={materials['Material.004']}
-          position={[14.512, 9.226, -3.485]}
-          rotation={[0, 0, -Math.PI]}
-          scale={[-0.19, -0.222, -23.169]} />
-      </MeshCollider>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cubo002.geometry}
+            material={materials['Material.004']}
+            position={[14.512, 9.226, -3.485]}
+            rotation={[0, 0, -Math.PI]}
+            scale={[-0.19, -0.222, -23.169]} />
+        </MeshCollider>
 
-      <MeshCollider type='trimesh'>
+      </RigidBody>
 
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cubo.geometry}
-          material={materials.Metal}
-          position={[-12.521, 14.006, -13]}
-          rotation={[0, -Math.PI / 2, 0]}
-          scale={[1, 1.556, 1.275]} />
-      </MeshCollider>
+      <RigidBody type='fixed'>
+
+        <MeshCollider type='trimesh'>
+
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cubo.geometry}
+            material={materials.Metal}
+            position={[-12.521, 14.006, -13]}
+            rotation={[0, -Math.PI / 2, 0]}
+            scale={[1, 1.556, 1.275]} />
+        </MeshCollider>
+      </RigidBody>
 
     </group>
 
