@@ -29,9 +29,18 @@ export function Loli(props) {
   return (
     <group {...props} dispose={null}>
 
-      <mesh geometry={nodes.lianhua_color_0.geometry} material={materials.color} position={[13.439, 14.006, -5.045]} rotation={[-2.66, -1.068, -2.717]} scale={0.027} />
-      <mesh geometry={nodes.outline_black_0.geometry} material={materials.black} position={[13.439, 14.006, -5.045]} rotation={[-2.66, -1.068, -2.717]} scale={0.027} />
-      <mesh geometry={nodes['outline_������_0'].geometry} material={materials.material} position={[13.439, 14.006, -5.045]} rotation={[-2.66, -1.068, -2.717]} scale={0.027} />
+      <mesh 
+          castShadow
+          receiveShadow
+          geometry={nodes.lianhua_color_0.geometry} material={materials.color} position={[13.439, 14.006, -5.045]} rotation={[-2.66, -1.068, -2.717]} scale={0.027} />
+      <mesh 
+          castShadow
+          receiveShadow
+          geometry={nodes.outline_black_0.geometry} material={materials.black} position={[13.439, 14.006, -5.045]} rotation={[-2.66, -1.068, -2.717]} scale={0.027} />
+      <mesh 
+          castShadow
+          receiveShadow
+          geometry={nodes['outline_������_0'].geometry} material={materials.material} position={[13.439, 14.006, -5.045]} rotation={[-2.66, -1.068, -2.717]} scale={0.027} />
     </group >
   )
 }

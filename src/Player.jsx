@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber"
 import { useKeyboardControls } from "@react-three/drei"
 import { CapsuleCollider, RigidBody, useRapier } from "@react-three/rapier"
 
-const SPEED = 5
+const SPEED = 10
 const direction = new THREE.Vector3()
 const frontVector = new THREE.Vector3()
 const sideVector = new THREE.Vector3()
@@ -22,9 +22,8 @@ export function Player() {
     if (ref.current) {
       const { forward, backward, left, right, jump } = get();
       const velocity = ref.current.linvel();
-      console.log(ref.current.linvel());
       // update camera
-      state.camera.position.set(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z)
+      state.camera.position.set(ref.current.translation().x, ref.current.translation().y+ 1, ref.current.translation().z)
       // movement
       frontVector.set(0, 0, backward - forward)
       sideVector.set(left - right, 0, 0)
@@ -55,7 +54,7 @@ export function Player() {
   return (
     <>
       <RigidBody ref={ref} colliders={false} mass={1} type="dynamic" position={[0, 3, -40]} enabledRotations={[false, false, false]}>
-        <CapsuleCollider args={[3, 0.5]} />
+        <CapsuleCollider args={[2, 0.5]} />
       </RigidBody>
     </>
   )
