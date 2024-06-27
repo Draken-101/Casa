@@ -34,6 +34,7 @@ export function PuertaBaño(props) {
     if (doorRef.current) {
       doorRef.current.setNextKinematicTranslation(doorPosition.current);
       doorRef.current.setNextKinematicRotation(new THREE.Quaternion().setFromEuler(doorRotation.current));
+      
     }
   });
 
