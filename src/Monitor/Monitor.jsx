@@ -14,10 +14,10 @@ export function Monitor(props) {
   materials['Material.006'].emissiveIntensity = 100;  // Asegúrate de ajustar esto según sea necesario
   materials['Material.006'].toneMapped = false;
   return (
-    <group {...props} dispose={null} onClick={() => {
+    <group {...props} dispose={null}>
+      <group position={[-9.204, 12.854, 3.064]} rotation={[Math.PI / 2, 0, -1.887]} scale={[1.245, 0.281, 0.4]} onClick={() => {
       setOnOff(!onOff)
     }}>
-      <group position={[-9.204, 12.854, 3.064]} rotation={[Math.PI / 2, 0, -1.887]} scale={[1.245, 0.281, 0.4]}>
         <mesh
           castShadow
           receiveShadow

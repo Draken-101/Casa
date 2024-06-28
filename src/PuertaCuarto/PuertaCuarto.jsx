@@ -41,30 +41,15 @@ export function PuertaCuarto(props) {
   };
 
   return (
-    <group {...props} scale={doorScale.current} onClick={handleDoorClick}>
-      <RigidBody
-        type="kinematicPosition"
-        ref={doorRef}
-        colliders="cuboid"
-        position={initialDoorPosition}
-        rotation={initialRotation}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cubo_1.geometry}
-          material={materials.Vidrio}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cubo_2.geometry}
-          material={materials.Metal}
-        />
+    <group {...props} onClick={handleDoorClick}>
+      <RigidBody type="kinematicPosition" ref={doorRef} colliders="cuboid" position={doorPosition.current} rotation={doorRotation.current}>
+        <group scale={doorScale.current}>
+          <mesh castShadow receiveShadow geometry={nodes.Cubo_1.geometry} material={materials.Vidrio} />
+          <mesh castShadow receiveShadow geometry={nodes.Cubo_2.geometry} material={materials.Metal} />
+        </group>
       </RigidBody>
     </group>
   );
 }
 
-// Precargar el modelo glTF para optimización
 useGLTF.preload('/Puerta-transformed.glb');

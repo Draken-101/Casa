@@ -14,8 +14,8 @@ export function PuertaBaño(props) {
   const openDoorPosition = new THREE.Vector3(11.7, 13.853, 5.4);
   const initialRotation = new THREE.Euler(0, -(Math.PI / 2), 0);
   const openRotation = new THREE.Euler(0, 0, 0);
-  const initialScale = new THREE.Vector3(1.984, 1.554, 0.899);
-  const openScale = new THREE.Vector3(0.899, 1.554, 1.984);
+  const initialScale = new THREE.Vector3(0.899, 1.554, 1.984);
+  const openScale = new THREE.Vector3(1.984, 1.554, 0.899);
 
   const doorPosition = useRef(initialDoorPosition.clone());
   const doorRotation = useRef(initialRotation.clone());
@@ -43,26 +43,12 @@ export function PuertaBaño(props) {
   };
 
   return (
-    <group {...props} scale={doorScale.current} onClick={handleDoorClick}>
-      <RigidBody
-        type="kinematicPosition"
-        ref={doorRef}
-        colliders="cuboid"
-        position={initialDoorPosition}
-        rotation={initialRotation}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cubo_1.geometry}
-          material={materials.Vidrio}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cubo_2.geometry}
-          material={materials.Metal}
-        />
+    <group {...props} onClick={handleDoorClick}>
+      <RigidBody type="kinematicPosition" ref={doorRef} colliders="cuboid" position={doorPosition.current} rotation={doorRotation.current}>
+        <group scale={doorScale.current}>
+          <mesh castShadow receiveShadow geometry={nodes.Cubo_1.geometry} material={materials.Vidrio} />
+          <mesh castShadow receiveShadow geometry={nodes.Cubo_2.geometry} material={materials.Metal} />
+        </group>
       </RigidBody>
     </group>
   );

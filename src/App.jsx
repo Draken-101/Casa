@@ -22,11 +22,39 @@ const Div = styled.div`
   width: 100vw;
   height: 100vh;
   position: relative;
+  button{
+    position: absolute;
+    z-index: 10;
+    padding: 1vw 5vw;
+    background-color: #4d4d4d77;
+    color: #b6b6b6;
+    border: 0;
+    font-size: 1.5vw;
+    bottom: 0;
+    margin: 2vw;
+    transition: .3s;
+    &:hover{
+      background-color: #80808077;
+      color: white;
+      border-radius: .2vw;
+      cursor: pointer;
+    }
+  }
 `;
 
 export default function App() {
+  const [position, setPosition] = useState(0);
+  const handlerPosition = () => {
+    console.log(position);
+    if (position < 2) {
+      setPosition(prevPosition => (prevPosition + 1));
+    } else {
+      setPosition(0);
+    }
+  }
   return (
     <Div>
+      <button onClick={handlerPosition}>Mover Camara</button>
       <Canvas shadows gl={{ antialias: true, shadowMap: { enabled: true, type: THREE.PCFSoftShadowMap } }}>
         <directionalLight
           intensity={1}
@@ -42,12 +70,12 @@ export default function App() {
         >
           <OrthographicCamera attach="shadow-camera" args={[-20, 20, 20, -20]} />
         </directionalLight>
-        <OrbitControls/>
         <ambientLight intensity={.2} />
 
         {/* Física y objetos */}
         <Physics timeStep="vary">
           <RigidBody type="fixed" colliders='trimesh'>
+            <Player position={position}/>
             <PuertaBaño />
             <Porton />
             <Monitor />

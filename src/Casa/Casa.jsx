@@ -4,26 +4,28 @@ Command: npx gltfjsx@6.2.18 Casa.gltf --transform
 Files: Casa.gltf [29.16KB] > C:\Users\Draken-101\Desktop\3D\Web\Casa\Casa-transformed.glb [1.45MB] (-4856%)
 */
 
-import React, { useRef } from 'react'
+import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { MeshCollider, RigidBody } from '@react-three/rapier'
+import { Luz } from './Luces';
 
 export function Casa(props) {
-  const { nodes, materials } = useGLTF('/Casa-transformed.glb')
+  const { nodes, materials } = useGLTF('/Casa-transformed.glb');
+  const focos = [[2, 20, 0], [2, 20, -8], [-8, 20, 7]]
   return (
     <group {...props} dispose={null}>
       <RigidBody type='fixed'   >
         <MeshCollider type='trimesh'>
-          <mesh 
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane.geometry} material={materials['Material.002']} position={[-1.037, 0.01, -24.557]} scale={71.251} />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane.geometry} material={materials['Material.002']} position={[-1.037, 0.01, -24.557]} scale={71.251} />
         </MeshCollider>
       </RigidBody>
       <group position={[10.965, 12.203, -1.607]} rotation={[Math.PI, 0, Math.PI]} scale={1.859}>
         <RigidBody type='fixed'   >
           <MeshCollider type='trimesh'>
-            <mesh 
+            <mesh
               castShadow
               receiveShadow
               geometry={nodes.Cube001.geometry} material={materials.WoodQuarteredChiffon001_2K} />
@@ -31,7 +33,7 @@ export function Casa(props) {
         </RigidBody>
         <RigidBody type='fixed'   >
           <MeshCollider type='trimesh'>
-            <mesh 
+            <mesh
               castShadow
               receiveShadow
               geometry={nodes.Cube001_1.geometry} material={materials['Material.004']} />
@@ -40,40 +42,40 @@ export function Casa(props) {
       </group>
       <RigidBody type='fixed'   >
         <MeshCollider type='trimesh'>
-          <mesh 
-              castShadow
-              receiveShadow
-              geometry={nodes.matress.geometry} material={materials.PaletteMaterial001} position={[10.965, 12.315, -1.607]} rotation={[Math.PI, 0, Math.PI]} scale={[2.851, 0.211, 1.789]} />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.matress.geometry} material={materials.PaletteMaterial001} position={[10.965, 12.315, -1.607]} rotation={[Math.PI, 0, Math.PI]} scale={[2.851, 0.211, 1.789]} />
         </MeshCollider>
       </RigidBody>
       <RigidBody type='fixed'   >
         <MeshCollider type='trimesh'>
-          <mesh 
-              castShadow
-              receiveShadow
-              geometry={nodes.blanket.geometry} material={materials.FabricUpholsteryMidCenturyPebbles001_2K} position={[10.444, 13.464, -1.607]} rotation={[Math.PI, 0, Math.PI]} scale={[2.514, 1.859, 2.376]} />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.blanket.geometry} material={materials.FabricUpholsteryMidCenturyPebbles001_2K} position={[10.444, 13.464, -1.607]} rotation={[Math.PI, 0, Math.PI]} scale={[2.514, 1.859, 2.376]} />
         </MeshCollider>
       </RigidBody>
       <RigidBody type='fixed'   >
         <MeshCollider type='trimesh'>
-          <mesh 
-              castShadow
-              receiveShadow
-              geometry={nodes.stand_top.geometry} material={materials.PaletteMaterial002} position={[0, -0.568, 1.201]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.044, 0.289, 0.193]} />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.stand_top.geometry} material={materials.PaletteMaterial002} position={[0, -0.568, 1.201]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.044, 0.289, 0.193]} />
         </MeshCollider>
       </RigidBody>
       <RigidBody type='fixed'   >
         <MeshCollider type='trimesh'>
-          <mesh 
-              castShadow
-              receiveShadow
-              geometry={nodes.light_power.geometry} material={materials.PaletteMaterial003} position={[-9.463, 12.478, 2.223]} rotation={[Math.PI / 2, 0, -1.702]} scale={0.002} />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.light_power.geometry} material={materials.PaletteMaterial003} position={[-9.463, 12.478, 2.223]} rotation={[Math.PI / 2, 0, -1.702]} scale={0.002} />
         </MeshCollider>
       </RigidBody>
       <group position={[14.512, 9.226, -3.485]} rotation={[0, 0, -Math.PI]} scale={[-0.19, -0.222, -23.169]}>
         <RigidBody type='fixed'   >
           <MeshCollider type='trimesh'>
-            <mesh 
+            <mesh
               castShadow
               receiveShadow
               geometry={nodes.Clima.geometry} material={materials.PaletteMaterial004} />
@@ -81,7 +83,7 @@ export function Casa(props) {
         </RigidBody>
         <RigidBody type='fixed'   >
           <MeshCollider type='trimesh'>
-            <mesh 
+            <mesh
               castShadow
               receiveShadow
               geometry={nodes.Clima_1.geometry} material={materials['Material.003']} />
@@ -90,12 +92,16 @@ export function Casa(props) {
       </group>
       <RigidBody type='fixed'   >
         <MeshCollider type='trimesh'>
-          <mesh 
-              castShadow
-              receiveShadow
-              geometry={nodes.Cubo.geometry} material={materials.PaletteMaterial005} position={[-12.521, 14.006, -13]} rotation={[0, -Math.PI / 2, 0]} scale={[1, 1.556, 1.275]} />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cubo.geometry} material={materials.PaletteMaterial005} position={[-12.521, 14.006, -13]} rotation={[0, -Math.PI / 2, 0]} scale={[1, 1.556, 1.275]} />
         </MeshCollider>
       </RigidBody>
+      {/* Cuarto 2, 20, 0 */}
+      {/* Cocina 0, 20, -8 */}
+      {/* Pasillo -8, 20, 7 */}
+      { focos.map(position => (<Luz position={position}/>)) }
     </group>
   )
 }

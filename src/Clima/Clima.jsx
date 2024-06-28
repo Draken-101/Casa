@@ -12,8 +12,10 @@ export function Clima(props) {
   materials.On.toneMapped = false;     // Desactivar el mapeo de tonos para mantener el color brillante
 
   return (
-    <group {...props} dispose={null} onClick={() => setOnOff(!onOff)}>
-      <group position={[-6.113, 18.285, 3.88]} rotation={[0, 0, -Math.PI]} scale={[-0.19, -0.222, -23.169]}>
+    <group {...props} dispose={null}>
+      <group position={[-6.113, 18.285, 3.88]} rotation={[0, 0, -Math.PI]} scale={[-0.19, -0.222, -23.169]} onClick={() => {
+      console.log(onOff);
+      setOnOff(!onOff)}}>
         <mesh castShadow receiveShadow geometry={nodes.Clima001.geometry} material={materials['Material.001']} />
         <mesh castShadow receiveShadow geometry={nodes.Clima001_1.geometry} material={onOff ? materials.On : materials.Off} />
         <mesh castShadow receiveShadow geometry={nodes.Clima001_2.geometry} material={materials.Off} />
