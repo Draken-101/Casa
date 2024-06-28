@@ -55,26 +55,8 @@ export default function App() {
   return (
     <Div>
       <button onClick={handlerPosition}>Mover Camara</button>
-      <Canvas shadows gl={{ antialias: true, shadowMap: { enabled: true, type: THREE.PCFSoftShadowMap } }}>
-        <directionalLight
-          intensity={1}
-          castShadow
-          shadow-bias={-0.0004}
-          position={[-20, 20, 20]}
-          shadow-mapSize-width={1048}
-          shadow-mapSize-height={1048}
-          shadow-camera-left={-20}
-          shadow-camera-right={20}
-          shadow-camera-top={20}
-          shadow-camera-bottom={-20}
-        >
-          <OrthographicCamera attach="shadow-camera" args={[-20, 20, 20, -20]} />
-        </directionalLight>
-        <ambientLight intensity={.2} />
-
-        {/* Física y objetos */}
-        <Physics timeStep="vary">
-          <RigidBody type="fixed" colliders='trimesh'>
+      <Canvas shadows>
+        <ambientLight intensity={.3} />
             <Player position={position}/>
             <PuertaBaño />
             <Porton />
@@ -83,10 +65,6 @@ export default function App() {
             <Casa />
             <Loli />
             <PuertaCuarto />
-            <CuboidCollider args={[1000, 2, 1000]} position={[0, -2, 0]} />
-          </RigidBody>
-          <Stars />
-        </Physics>
       </Canvas>
     </Div>
   );

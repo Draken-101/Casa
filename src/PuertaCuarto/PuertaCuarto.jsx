@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
-import { RigidBody } from '@react-three/rapier';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -30,9 +29,11 @@ export function PuertaCuarto(props) {
     doorRotation.current.y = THREE.MathUtils.lerp(doorRotation.current.y, targetRotation.y, 0.05);
     doorScale.current.lerp(targetScale, 0.05);
 
+    // Update the position, rotation, and scale directly on the mesh
     if (doorRef.current) {
-      doorRef.current.setNextKinematicTranslation(doorPosition.current);
-      doorRef.current.setNextKinematicRotation(new THREE.Quaternion().setFromEuler(doorRotation.current));
+      doorRef.current.position.copy(doorPosition.current);
+      doorRef.current.rotation.copy(doorRotation.current);
+      doorRef.current.scale.copy(doorScale.current);
     }
   });
 
@@ -42,14 +43,13 @@ export function PuertaCuarto(props) {
 
   return (
     <group {...props} onClick={handleDoorClick}>
-      <RigidBody type="kinematicPosition" ref={doorRef} colliders="cuboid" position={doorPosition.current} rotation={doorRotation.current}>
-        <group scale={doorScale.current}>
-          <mesh castShadow receiveShadow geometry={nodes.Cubo_1.geometry} material={materials.Vidrio} />
-          <mesh castShadow receiveShadow geometry={nodes.Cubo_2.geometry} material={materials.Metal} />
-        </group>
-      </RigidBody>
+      <group ref={doorRef} position={doorPosition.current} rotation={doorRotation.current} scale={doorScale.current}>
+        <mesh castShadow receiveShadow geometry={nodes.Cubo_1.geometry} material={materials.Vidrio} />
+        <mesh castShadow receiveShadow geometry={nodes.Cubo_2.geometry} material={materials.Metal} />
+      </group>
     </group>
   );
 }
 
+// Precargar el modelo glTF para optimización
 useGLTF.preload('/Puerta-transformed.glb');
