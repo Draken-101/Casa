@@ -1,17 +1,45 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useUserContext } from '../../Context/useContext';
+import axios from 'axios';
 
-export function PuertaCuarto(props) {
+export function PuertaBaño(props) {
   const { nodes, materials } = useGLTF('/Puerta-transformed.glb');
   const [doorOpen, setDoorOpen] = useState(false);
   const doorRef = useRef();
 
-  const initialDoorPosition = new THREE.Vector3(-9.761, 13.853, -11.613);
-  const openDoorPosition = new THREE.Vector3(-9, 13.853, -12.75);
-  const initialRotation = new THREE.Euler(0, 0, 0);
-  const openRotation = new THREE.Euler(0, Math.PI / 2, 0);
+  const { devices, user } = useUserContext();
+
+  useEffect(() => {
+    devices.map(device => {
+        if (device.name == 'Puerta-Cuarto-Baño') {
+          setDoorOpen(device.status);
+        }
+    })
+    return () => {
+
+    };
+}, [devices]);
+  const trigger = async () => {
+    const body = JSON.stringify({
+      nameUser: user.name,
+      name: 'Puerta-Cuarto-Baño'
+    })
+    const headers = {
+      'token': `${user.token}`,  // Usando Bearer token para autorización
+      'Content-Type': 'application/json'  // Tipo de contenido del cuerpo de la solicitud
+    };
+    await axios.post(`http://localhost:3000/api/v1/devices/trigger`, body, { headers })
+      .then(data => {
+        setDoorOpen(data.triggerDevice.status);
+      });
+  }
+  const initialDoorPosition = new THREE.Vector3(10.561, 13.853, 4.7);
+  const openDoorPosition = new THREE.Vector3(11.7, 13.853, 5.4);
+  const initialRotation = new THREE.Euler(0, -(Math.PI / 2), 0);
+  const openRotation = new THREE.Euler(0, 0, 0);
   const initialScale = new THREE.Vector3(0.899, 1.554, 1.984);
   const openScale = new THREE.Vector3(1.984, 1.554, 0.899);
 
@@ -37,12 +65,9 @@ export function PuertaCuarto(props) {
     }
   });
 
-  const handleDoorClick = () => {
-    setDoorOpen(!doorOpen);
-  };
 
   return (
-    <group {...props} onClick={handleDoorClick}>
+    <group {...props} onClick={trigger}>
       <group ref={doorRef} position={doorPosition.current} rotation={doorRotation.current} scale={doorScale.current}>
         <mesh castShadow receiveShadow geometry={nodes.Cubo_1.geometry} material={materials.Vidrio} />
         <mesh castShadow receiveShadow geometry={nodes.Cubo_2.geometry} material={materials.Metal} />

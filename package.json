@@ -16,10 +16,12 @@
     "@react-three/fiber": "^8.16.8",
     "@react-three/postprocessing": "^2.16.2",
     "@react-three/rapier": "^1.4.0",
+    "axios": "^1.7.2",
     "ecctrl": "^1.0.82",
     "maath": "^0.10.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.24.1",
     "styled-components": "^6.1.11",
     "three": "^0.165.0"
   },

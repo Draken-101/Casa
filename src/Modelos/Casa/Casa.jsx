@@ -4,13 +4,32 @@ Command: npx gltfjsx@6.2.18 Casa.gltf --transform
 Files: Casa.gltf [29.16KB] > C:\Users\Draken-101\Desktop\3D\Web\Casa\Casa-transformed.glb [1.45MB] (-4856%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { Luz } from './Luces';
+import { useUserContext } from '../../Context/useContext';
+import { useEffect, useState } from 'react';
+import { FocoCocina } from '../Focos/FocoCocina';
+import { FocoCuarto } from '../Focos/FocoCuarto';
+import { FocoPorton1 } from '../Focos/FocoPorton1';
+import { FocoPorton2 } from '../Focos/FocoPorton2';
+import { FocoPasillo } from '../Focos/FocoPasillo';
 
 export function Casa(props) {
+  const { devices } = useUserContext();
   const { nodes, materials } = useGLTF('/Casa-transformed.glb');
-  const focos = [[2, 20, 0], [2, 20, -8], [-8, 20, 7]]
+  const [focos, setFocos] = useState([]);
+
+  useEffect(() => {
+    devices?.map(device => {
+      if (device?.name.includes('Foco')) {
+        console.log(device);
+        setFocos(prevFocos => [...prevFocos, device])
+      }
+    })
+    return () => {
+
+    };
+  }, [devices]);
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -60,7 +79,11 @@ export function Casa(props) {
       {/* Cuarto 2, 20, 0 */}
       {/* Cocina 0, 20, -8 */}
       {/* Pasillo -8, 20, 7 */}
-      {focos.map(position => (<Luz position={position} />))}
+      <FocoCocina/>
+      <FocoCuarto/>
+      <FocoPasillo/>
+      <FocoPorton1/>
+      <FocoPorton2/>
     </group>
   )
 }

@@ -1,14 +1,26 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Luz } from '../Casa/Luces';
+import { useUserContext } from '../../Context/useContext';
+import axios from 'axios';
 
 export function Porton(props) {
+  const { devices, user } = useUserContext();
   const { nodes, materials } = useGLTF('/Porton-transformed.glb');
   const [doorOpen, setDoorOpen] = useState(false);
   const doorRef = useRef();
 
+  useEffect(() => {
+    devices.map(device => {
+      if (device.name == 'Porton') {
+        setDoorOpen(device.status);
+      }
+    })
+    return () => {
+
+    };
+  }, [devices]);
   const initialDoorPosition = new THREE.Vector3(-3.777, 8.021, -26.492);
   const openDoorPosition = new THREE.Vector3(-3.777, 8, -28);
   const initialRotation = new THREE.Euler(0, 0, 0);
@@ -37,25 +49,30 @@ export function Porton(props) {
     }
   });
 
-  const handleDoorClick = () => {
-    setDoorOpen(!doorOpen);
-  };
+  const trigger = async () => {
+    const body = JSON.stringify({
+      nameUser: user.name,
+      name: 'Porton'
+    })
+    const headers = {
+      'token': `${user.token}`,  // Usando Bearer token para autorización
+      'Content-Type': 'application/json'  // Tipo de contenido del cuerpo de la solicitud
+    };
+    await axios.post(`http://localhost:3000/api/v1/devices/trigger`, body, { headers })
+      .then(data => {
+        setDoorOpen(data.triggerDevice.status)
+      });
+  }
 
-  const focos = [[-3.777, 7.8, -27.5], [-3.777, 8.5, -18]];
 
   return (
     <group {...props} dispose={null}>
-      <group onClick={handleDoorClick}>
+      <group onClick={trigger}>
         <group ref={doorRef} position={doorPosition.current} rotation={doorRotation.current} scale={doorScale.current}>
           <mesh castShadow receiveShadow geometry={nodes.Plane004.geometry} material={materials['Material.007']} />
           <mesh castShadow geometry={nodes.Plane004_1.geometry} material={materials.Vidrio} />
         </group>
       </group>
-
-      {/* Adding the small glowing balls */}
-      {focos.map((position, index) => (
-        <Luz key={index} position={position} />
-      ))}
     </group>
   );
 }
