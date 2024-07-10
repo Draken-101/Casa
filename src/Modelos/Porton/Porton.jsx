@@ -49,7 +49,7 @@ export function Porton(props) {
   const trigger = async () => {
     const body = JSON.stringify({
       nameUser: user.name,
-      nameDevice: 'Foco-Cuarto-1',
+      nameDevice: 'Porton',
       roleUser:user.role
   })
     const headers = { // Usando Bearer token para autorización

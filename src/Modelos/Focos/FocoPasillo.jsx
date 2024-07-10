@@ -33,7 +33,7 @@ export function FocoPasillo() {
     const trigger = async () => {
         const body = JSON.stringify({
             nameUser: user.name,
-            nameDevice: 'Foco-Cuarto-1',
+            nameDevice: 'Foco-Pasillo-1',
             roleUser:user.role
         })
         const headers = {// Usando Bearer token para autorización

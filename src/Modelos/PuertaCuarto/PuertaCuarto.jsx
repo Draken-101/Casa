@@ -56,7 +56,7 @@ export function PuertaCuarto(props) {
   const trigger = async () => {
     const body = JSON.stringify({
       nameUser: user.name,
-      nameDevice: 'Foco-Cuarto-1',
+      nameDevice: 'Puerta-Cuarto-Entrada',
       roleUser: user.role
     })
     const headers = {  // Usando Bearer token para autorización

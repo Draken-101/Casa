@@ -14,7 +14,7 @@ export function PuertaBaño(props) {
 
   useEffect(() => {
     const device = devices.find(device => device.nameDevice === 'Puerta-Cuarto-Baño');
-    setDoorOpen(device.status);
+    setDoorOpen(device?.status);
     return () => {
 
     };
@@ -22,7 +22,7 @@ export function PuertaBaño(props) {
   const trigger = async () => {
     const body = JSON.stringify({
       nameUser: user.name,
-      nameDevice: 'Foco-Cuarto-1',
+      nameDevice: 'Puerta-Cuarto-Baño',
       roleUser: user.role
     })
     const headers = { // Usando Bearer token para autorización

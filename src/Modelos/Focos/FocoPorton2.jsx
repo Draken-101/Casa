@@ -36,7 +36,7 @@ export function FocoPorton2() {
     const trigger = async () => {
         const body = JSON.stringify({
             nameUser: user.name,
-            nameDevice: 'Foco-Cuarto-1',
+            nameDevice: 'Foco-Porton-2',
             roleUser:user.role
         })
         const headers = {
