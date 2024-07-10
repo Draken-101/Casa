@@ -21,7 +21,7 @@ export function Casa(props) {
 
   useEffect(() => {
     devices?.map(device => {
-      if (device?.name.includes('Foco')) {
+      if (device?.name?.includes('Foco')) {
         console.log(device);
         setFocos(prevFocos => [...prevFocos, device])
       }

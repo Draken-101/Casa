@@ -13,28 +13,22 @@ export function PuertaBaño(props) {
   const { devices, user } = useUserContext();
 
   useEffect(() => {
-    devices.map(device => {
-        if (device.name == 'Puerta-Cuarto-Baño') {
-          setDoorOpen(device.status);
-        }
-    })
+    const device = devices.find(device => device.nameDevice === 'Puerta-Cuarto-Baño');
+    setDoorOpen(device.status);
     return () => {
 
     };
-}, [devices]);
+  }, [devices]);
   const trigger = async () => {
     const body = JSON.stringify({
       nameUser: user.name,
-      name: 'Puerta-Cuarto-Baño'
+      nameDevice: 'Foco-Cuarto-1',
+      roleUser: user.role
     })
-    const headers = {
-      'token': `${user.token}`,  // Usando Bearer token para autorización
+    const headers = { // Usando Bearer token para autorización
       'Content-Type': 'application/json'  // Tipo de contenido del cuerpo de la solicitud
     };
     await axios.post(`http://localhost:3000/api/v1/devices/trigger`, body, { headers })
-      .then(data => {
-        setDoorOpen(data.triggerDevice.status);
-      });
   }
   const initialDoorPosition = new THREE.Vector3(10.561, 13.853, 4.7);
   const openDoorPosition = new THREE.Vector3(11.7, 13.853, 5.4);

@@ -11,8 +11,8 @@ export function FocoPorton1() {
     const [isOn, setIsOn] = useState(false);
 
     useEffect(() => {
-        const device = devices.find(device => device.name === 'Foco-Porton-1');
-        setIsOn(device.status);
+        const device = devices.find(device => device.nameDevice === 'Foco-Porton-1');
+        setIsOn(device?.status);
     }, [devices]);
 
     const { scaleSpring, colorEmissive, lightIntensity } = useSpring({
@@ -32,16 +32,13 @@ export function FocoPorton1() {
     const trigger = async () => {
         const body = JSON.stringify({
             nameUser: user.name,
-            name: 'Foco-Porton-1'
+            nameDevice: 'Foco-Cuarto-1',
+            roleUser:user.role
         })
-        const headers = {
-            'token': `${user.token}`,  // Usando Bearer token para autorización
+        const headers = {  // Usando Bearer token para autorización
             'Content-Type': 'application/json'  // Tipo de contenido del cuerpo de la solicitud
         };
         await axios.post(`http://localhost:3000/api/v1/devices/trigger`, body, { headers })
-            .then(data => {
-                setIsOn(data.triggerDevice.status)
-            });
     }
 
     return (

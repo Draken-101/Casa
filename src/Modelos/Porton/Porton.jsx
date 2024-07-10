@@ -12,11 +12,8 @@ export function Porton(props) {
   const doorRef = useRef();
 
   useEffect(() => {
-    devices.map(device => {
-      if (device.name == 'Porton') {
-        setDoorOpen(device.status);
-      }
-    })
+    const device = devices.find(device => device.nameDevice === 'Porton');
+    setDoorOpen(device?.status);
     return () => {
 
     };
@@ -52,16 +49,13 @@ export function Porton(props) {
   const trigger = async () => {
     const body = JSON.stringify({
       nameUser: user.name,
-      name: 'Porton'
-    })
-    const headers = {
-      'token': `${user.token}`,  // Usando Bearer token para autorización
+      nameDevice: 'Foco-Cuarto-1',
+      roleUser:user.role
+  })
+    const headers = { // Usando Bearer token para autorización
       'Content-Type': 'application/json'  // Tipo de contenido del cuerpo de la solicitud
     };
     await axios.post(`http://localhost:3000/api/v1/devices/trigger`, body, { headers })
-      .then(data => {
-        setDoorOpen(data.triggerDevice.status)
-      });
   }
 
 

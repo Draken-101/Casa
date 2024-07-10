@@ -13,8 +13,10 @@ export async function getData(setDevices) {
             console.log(updateDevice);
 
             setDevices(prevDevices => (prevDevices?.map(device => {
-                if (device.name == updateDevice.name) {
+                if (device.nameDevice == updateDevice.nameDevice) {
+                    
                     device.status = updateDevice.status;
+                    console.log(device.status);
                 }
                 return device;
             })))

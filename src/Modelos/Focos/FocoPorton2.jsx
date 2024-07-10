@@ -11,8 +11,8 @@ export function FocoPorton2() {
     const [isOn, setIsOn] = useState(false);
 
     useEffect(() => {
-        const device = devices.find(device => device.name === 'Foco-Porton-2');
-        setIsOn(device.status);
+        const device = devices.find(device => device.nameDevice === 'Foco-Porton-2');
+        setIsOn(device?.status);
         return () => {
 
         };
@@ -36,17 +36,13 @@ export function FocoPorton2() {
     const trigger = async () => {
         const body = JSON.stringify({
             nameUser: user.name,
-            role:user.role,
-            name: 'Foco-Porton-2'
+            nameDevice: 'Foco-Cuarto-1',
+            roleUser:user.role
         })
         const headers = {
-            'token': `${user.token}`,  
             'Content-Type': 'application/json'
         };
         await axios.post(`http://localhost:3000/api/v1/devices/trigger`, body, { headers })
-            .then(data => {
-                setIsOn(data.triggerDevice.status)
-            });
     }
 
     return (
