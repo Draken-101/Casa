@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
-import * as THREE from 'three';
 import axios from 'axios';
 import { useUserContext } from '../../Context/useContext';
 
@@ -12,21 +11,19 @@ export function Clima(props) {
   const { devices, user } = useUserContext();
 
   useEffect(() => {
-    devices.map(device => {
-        if (device.name == 'Clima') {
-          setOnOff(device.status);
-        }
-    })
+    const device = devices.find(device => device.nameDevice === 'Clima');
+    setOnOff(device.status);
+
     return () => {
 
     };
-}, [devices]);
+  }, [devices]);
   const trigger = async () => {
     const body = JSON.stringify({
       nameUser: user.name,
       nameDevice: 'Clima',
-      roleUser:user.role
-  })
+      roleUser: user.role
+    })
     const headers = {// Usando Bearer token para autorización
       'Content-Type': 'application/json'  // Tipo de contenido del cuerpo de la solicitud
     };

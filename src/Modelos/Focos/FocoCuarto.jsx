@@ -12,7 +12,6 @@ export function FocoCuarto() {
 
     useEffect(() => {
         const device = devices.find(device => device.nameDevice === 'Foco-Cuarto-1');
-        console.log(device);
         setIsOn(device?.status);
     }, [devices]);
 
