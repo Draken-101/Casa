@@ -1,12 +1,19 @@
-import axios from "axios";
+
+import { WebSocket } from "ws";
 
 export async function getData(setDevices) {
-    await axios.get('http://localhost:3000/api/v1/devices')
+    const socket = await WebSocket('ws://localhost:8000')
         .then(data => {
             setDevices([...data.data]);
         })
+    socket.addEventListener('open', () => {
+        socket.send({event:'getDevices', user: });
+    });
+
+    socket.addEventListener('', () => {
+        
+    });
     const source = new EventSource('http://localhost:3000/api/v1/devices/realTimeStatusDevices');
-    console.log("realTimeStatusDevices");
 
     source.addEventListener('Trigger', (event) => {
         try {

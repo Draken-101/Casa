@@ -12,7 +12,7 @@ export function Clima(props) {
 
   useEffect(() => {
     const device = devices.find(device => device.nameDevice === 'Clima');
-    setOnOff(device.status);
+    setOnOff(device?.status);
 
     return () => {
 
