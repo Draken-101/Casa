@@ -18,7 +18,7 @@
     "react-router-dom": "^6.24.1",
     "styled-components": "^6.1.11",
     "three": "^0.165.0",
-    "ws": "^8.18.0"
+    "wscat": "^5.2.1"
   },
   "devDependencies": {
     "@dimforge/rapier3d-compat": "^0.13.1",
