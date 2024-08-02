@@ -1,43 +1,65 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { getData } from "./Data";
 
+const WS_URI = 'ws://localhost:8000';
+
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [devices, setDevices] = useState([]);
+  const [actions, setActions] = useState([]);
+  const [temperature, setTemperature] = useState(undefined);
   const [user, setUser] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
-    getData(setDevices);
+    getData(setDevices, setActions);
 
-    const socket = new WebSocket('ws://localhost:8000');
+    const socket = new WebSocket(WS_URI);
 
     socket.addEventListener('open', () => {
       socket.send(JSON.stringify({ nameUser: 'CLIENT_CASA', role: 'CLIENT', type: 'CONNECTION', message: 'CONNECTION', status: true }));
       console.log('Conexión establecida');
     });
- 
+
     socket.addEventListener('close', () => {
       console.log('Conexión cerrada');
     });
 
-    socket.addEventListener('error', (error) => { 
+    socket.addEventListener('error', (error) => {
       console.error('Error en la conexión WebSocket:', error);
     });
 
     socket.addEventListener('message', (message) => {
-      console.log(message.data);
       try {
-        const updateDevice = JSON.parse(message.data);
-        setDevices((prevDevices) => 
-          prevDevices.map((device) => {
-            if (device.nameDevice === updateDevice.nameDevice) {
-              return { ...device, status: updateDevice.status };
+
+        const dataJson = JSON.parse(message.data);
+        switch (dataJson.event) {
+          case "Trigger":
+            console.log("Trigger");
+            setDevices((prevDevices) =>
+              prevDevices.map((device) => {
+                if (device.nameDevice === dataJson.triggerDevice.nameDevice) {
+                  return { ...device, status: dataJson.triggerDevice.status };
+                }
+                return device;
+              })
+            );
+            break;
+          case "newAction":
+            setActions(prevActions => [...prevActions, dataJson.data])
+            break;
+          case "Temperature":
+            // Verifica si dataJson tiene el campo 'temperature'
+            if (dataJson.temperature !== undefined) {
+              console.log("Temperatura recibida:", dataJson.temperature);
+              setTemperature(dataJson.temperature);
+            } else {
+              console.error('Campo temperature no encontrado en el mensaje:', dataJson);
             }
-            return device;
-          })
-        );
+            break;
+
+        }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
       }
@@ -52,12 +74,18 @@ export function UserProvider({ children }) {
   const value = useMemo(() => ({
     devices,
     setDevices,
+    actions,
+    setActions,
+    temperature,
+    setTemperature,
     isAuthenticated,
     setIsAuthenticated,
     user,
     setUser,
   }), [
     devices,
+    actions,
+    temperature,
     isAuthenticated,
     user
   ]);

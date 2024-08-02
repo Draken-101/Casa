@@ -1,9 +1,11 @@
 import axios from "axios";
 
-export async function getData(setDevices) {
+export async function getData(setDevices, setActions) {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/devices');
+        let response = await axios.get('http://localhost:3000/api/v1/devices');
         setDevices([...response.data]);
+        response = await axios.get('http://localhost:3000/api/v1/Actions');
+        setActions([...response.data]);
     } catch (error) {
         console.error("Error fetching devices:", error);
     }

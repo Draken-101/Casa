@@ -5,6 +5,8 @@
 body {
   background: #12071f;
   margin: 0;
+  width: fit-content;
+  height: fit-content;
   display: flex;
   place-items: center;
   min-width: 320px;
